@@ -1,0 +1,44 @@
+package com.albanda.gamerapp.components
+
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import com.albanda.gamerapp.ui.theme.Red500
+
+@Composable
+fun DefaultButton(
+    text: String,
+    onClick: () -> Unit,
+    color: Color = Red500,
+    icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward
+) {
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)
+            .padding(top = 32.dp, bottom = 32.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = color),
+        onClick = { onClick() }
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = ""
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(
+            text = text
+        )
+    }
+}
