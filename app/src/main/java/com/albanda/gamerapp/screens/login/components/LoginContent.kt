@@ -1,6 +1,8 @@
 package com.albanda.gamerapp.screens.login.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,43 +31,55 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.albanda.gamerapp.R
 import com.albanda.gamerapp.ui.theme.DarkGray500
 import com.albanda.gamerapp.ui.theme.GamerAppTheme
+import com.albanda.gamerapp.ui.theme.Red500
 
 @Composable
 fun LoginContent() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Image(
-            modifier = Modifier.height(130.dp),
-            painter = painterResource(id = R.drawable.control),
-            contentDescription = "Xbox controller 360"
-        )
-        Text(
-            text = "FIREBASE MVVM"
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
+        BoxHeader()
         CardForm()
+    }
+}
+
+@Composable
+fun BoxHeader() {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .height(250.dp)
+        .background(Red500)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier.height(130.dp),
+                painter = painterResource(id = R.drawable.control),
+                contentDescription = "Xbox controller 360"
+            )
+            Text(
+                text = "FIREBASE MVVM"
+            )
+        }
     }
 }
 
 @Composable
 fun CardForm() {
     Card(
-        modifier = Modifier.padding(start = 40.dp, end = 40.dp),
+        modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
         colors = CardDefaults.cardColors(containerColor = DarkGray500)
     ) {
         Column(
