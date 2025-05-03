@@ -20,7 +20,7 @@ fun LoginBottomBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp),
+            .padding(bottom = 32.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
