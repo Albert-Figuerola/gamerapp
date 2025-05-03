@@ -51,7 +51,7 @@ fun BodyContent() {
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Image(
             modifier = Modifier.height(130.dp),
             painter = painterResource(id = R.drawable.control),
@@ -116,7 +116,12 @@ fun BodyContent() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
-    GamerAppTheme {
-        BodyContent()
+    GamerAppTheme(darkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            BodyContent()
+        }
     }
 }
