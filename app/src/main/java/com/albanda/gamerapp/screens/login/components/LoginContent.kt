@@ -4,23 +4,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,10 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.albanda.gamerapp.R
+import com.albanda.gamerapp.components.DefaultButton
+import com.albanda.gamerapp.components.DefaultTextFiled
 import com.albanda.gamerapp.ui.theme.DarkGray500
 import com.albanda.gamerapp.ui.theme.GamerAppTheme
 import com.albanda.gamerapp.ui.theme.Red500
@@ -76,6 +74,14 @@ fun BoxHeader() {
 
 @Composable
 fun CardForm() {
+    var email by remember {
+        mutableStateOf("")
+    }
+
+    var password by remember {
+        mutableStateOf("")
+    }
+
     Card(
         modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
         colors = CardDefaults.cardColors(containerColor = DarkGray500)
@@ -101,51 +107,59 @@ fun CardForm() {
                 fontSize = 12.sp,
                 color = Color.Gray
             )
-            OutlinedTextField(
+            
+            DefaultTextFiled(
                 modifier = Modifier.padding(top = 16.dp),
-                value = "",
-                onValueChange = {},
-                label = {
-                    Text("Correo electrónico")
-                },
-                leadingIcon = {
+                value = email,
+                onValueChange = { email = it },
+                label = "Correo electrónico",
+                leadingIcon = Icons.Default.Email,
+                keyboardType = KeyboardType.Email
+            )
+
+            var hideText by remember { mutableStateOf(true) }
+            val trailing: @Composable () -> Unit = {
+                val image = if (hideText) {
+                    R.drawable.visibility_off
+                } else {
+                    R.drawable.visibility
+                }
+
+                IconButton(onClick = { hideText = !hideText } ) {
                     Icon(
-                        imageVector = Icons.Default.Email,
+                        painter = painterResource(id = image),
                         contentDescription = "",
                         tint = Color.White
                     )
                 }
+            }
+
+            DefaultTextFiled(
+                modifier = Modifier.padding(top = 6.dp),
+                value = password,
+                onValueChange = { password = it },
+                label = "Password",
+                leadingIcon = Icons.Default.Lock,
+                trailingIcon = trailing,
+                hideText = hideText,
+                keyboardType = KeyboardType.Password
             )
 
-            PasswordTextField()
-
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp)
-                    .padding(top = 32.dp, bottom = 32.dp),
-                onClick = {}
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = "INICIAR SESION"
-                )
-            }
+            DefaultButton(
+                text = "INICIAR SESIÓN",
+                onClick = { }
+            )
         }
     }
 }
 
-@Composable
+/*@Composable
 fun PasswordTextField() {
     //var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        modifier = Modifier.padding(top = 5.dp),
+        modifier = Modifier.padding(top = 6.dp),
         value = "",
         onValueChange = {},
         label = {
@@ -174,7 +188,7 @@ fun PasswordTextField() {
             }
         }
     )
-}
+}*/
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
