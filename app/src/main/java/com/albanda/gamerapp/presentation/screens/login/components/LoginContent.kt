@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.screens.login.components
+package com.albanda.gamerapp.presentation.screens.login.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,11 +33,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.albanda.gamerapp.R
-import com.albanda.gamerapp.components.DefaultButton
-import com.albanda.gamerapp.components.DefaultTextFiled
-import com.albanda.gamerapp.ui.theme.DarkGray500
-import com.albanda.gamerapp.ui.theme.GamerAppTheme
-import com.albanda.gamerapp.ui.theme.Red500
+import com.albanda.gamerapp.presentation.components.DefaultButton
+import com.albanda.gamerapp.presentation.components.DefaultTextFiled
+import com.albanda.gamerapp.presentation.ui.theme.DarkGray500
+import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
+import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
 fun LoginContent() {

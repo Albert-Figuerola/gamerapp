@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.components
+package com.albanda.gamerapp.presentation.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -39,6 +39,7 @@ fun DefaultTextFiled(
             )
         },
         trailingIcon = trailingIcon,
+        singleLine = true,
         visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None
     )
 }

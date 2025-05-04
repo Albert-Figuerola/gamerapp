@@ -1,4 +1,4 @@
-package com.albanda.gamerapp
+package com.albanda.gamerapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,10 +9,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.albanda.gamerapp.screens.login.LoginScreen
-import com.albanda.gamerapp.ui.theme.GamerAppTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.albanda.gamerapp.presentation.navigation.AppNavigation
+import com.albanda.gamerapp.presentation.screens.login.LoginScreen
+import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,7 +27,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    navController = rememberNavController()
+                    LoginScreen(navController)
+                    AppNavigation(navController = navController)
                 }
             }
         }
@@ -36,7 +44,7 @@ fun PreviewLoginScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LoginScreen()
+            LoginScreen(rememberNavController())
         }
     }
 }
