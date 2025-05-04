@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    // Added for DAGGER HILT
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -37,6 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
+    // Added to avoid conflicts between "hilt-android-compiler" and "dagger-compiler"
+    packaging {
+        resources {
+            excludes += "META-INF/gradle/incremental.annotation.processors"
+        }
+    }
 }
 
 dependencies {
@@ -50,8 +60,14 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    // Added for navigation between screens
+    // Added for NAVIGATION between screens
     implementation("androidx.navigation:navigation-compose:2.8.9")
+
+    // Added for DAGGER HILT
+    implementation("com.google.dagger:hilt-android:2.56.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.56.1")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

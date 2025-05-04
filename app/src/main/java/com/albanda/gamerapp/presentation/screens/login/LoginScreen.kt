@@ -10,13 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.albanda.gamerapp.presentation.screens.components.LoginBottomBar
-import com.albanda.gamerapp.presentation.screens.components.LoginContent
+import com.albanda.gamerapp.presentation.screens.login.components.LoginBottomBar
+import com.albanda.gamerapp.presentation.screens.login.components.LoginContent
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
     Scaffold(
         topBar = {},
         content = {

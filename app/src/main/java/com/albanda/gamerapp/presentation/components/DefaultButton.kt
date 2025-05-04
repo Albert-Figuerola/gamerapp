@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -21,20 +22,22 @@ fun DefaultButton(
     text: String,
     onClick: () -> Unit,
     color: Color = Red500,
-    icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward
+    icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward,
+    enable: Boolean = true
 ) {
-    Button(
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(containerColor = color),
-        onClick = { onClick() }
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = ""
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = text
-        )
+    Column() {
+        Button(
+            modifier = modifier,
+            onClick = { onClick() },
+            colors = ButtonDefaults.buttonColors(containerColor = color),
+            enabled = enable
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = ""
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = text)
+        }
     }
 }
