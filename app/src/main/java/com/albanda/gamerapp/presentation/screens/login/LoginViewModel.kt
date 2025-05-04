@@ -1,9 +1,9 @@
 package com.albanda.gamerapp.presentation.screens.login
 
-import android.util.Patterns
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.albanda.gamerapp.presentation.screens.utils.AuthFormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 
@@ -20,25 +20,15 @@ class LoginViewModel @Inject constructor(): ViewModel() {
     var isEnabledLoginButton = false
 
     fun validateEmail() {
-        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
-            isEmailValid.value = true
-            emailErrMsg.value = ""
-        } else {
-            isEmailValid.value = false
-            emailErrMsg.value = "El email no es válido."
-        }
+        isEmailValid.value = AuthFormValidator.isEmailValid(email.value)
+        emailErrMsg.value = if (isEmailValid.value) "" else "El correo electrónico no es válido"
 
         enabledLoginButton()
     }
 
     fun validatePassword() {
-        if (password.value.length >= 6) {
-            isPasswordValid.value = true
-            passwordErrMsg.value = ""
-        } else {
-            isPasswordValid.value = false
-            passwordErrMsg.value = "Al menos 6 caracteres."
-        }
+        isPasswordValid.value = AuthFormValidator.isPasswordValid(password.value)
+        passwordErrMsg.value = if (isPasswordValid.value) "" else "Al menos 6 caracteres"
 
         enabledLoginButton()
     }
