@@ -1,9 +1,9 @@
 package com.albanda.gamerapp.presentation.screens.signup
 
-import android.util.Patterns
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.albanda.gamerapp.presentation.screens.utils.AuthFormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 
@@ -28,48 +28,29 @@ class SignupViewModel @Inject constructor() : ViewModel() {
     var isEnabledLoginButton = false
 
     fun validateUsername() {
-        if (username.value.length >= 5) {
-            isUsernameValid.value = true
-            usernameErrMsg.value = ""
-        } else {
-            usernameErrMsg.value = "Almenos 5 caracteres"
-        }
+        isUsernameValid.value = AuthFormValidator.isUsernameValid(username.value)
+        usernameErrMsg.value = if (isUsernameValid.value) "" else "Almenos 5 caracteres"
 
         enabledSignupButton()
     }
 
     fun validateEmail() {
-        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
-            isEmailValid.value = true
-            emailErrMsg.value = ""
-        } else {
-            isEmailValid.value = false
-            emailErrMsg.value = "El email no es válido."
-        }
+        isEmailValid.value = AuthFormValidator.isEmailValid(email.value)
+        emailErrMsg.value = if (isEmailValid.value) "" else "El correo electrónico no es válido"
 
         enabledSignupButton()
     }
 
     fun validatePassword() {
-        if (password.value.length >= 6) {
-            isPasswordValid.value = true
-            passwordErrMsg.value = ""
-        } else {
-            isPasswordValid.value = false
-            passwordErrMsg.value = "Al menos 6 caracteres."
-        }
+        isPasswordValid.value = AuthFormValidator.isPasswordValid(password.value)
+        passwordErrMsg.value = if (isPasswordValid.value) "" else "Al menos 6 caracteres"
 
         enabledSignupButton()
     }
 
     fun validateConfirmPassword() {
-        if (confirmPassword.value == password.value) {
-            isConfirmPasswordValid.value = true
-            confirmPasswordErrMsg.value = ""
-        } else {
-            isConfirmPasswordValid.value = false
-            confirmPasswordErrMsg.value = "Las contraseñas no coinciden"
-        }
+        isConfirmPasswordValid.value = AuthFormValidator.isConfirmPasswordValid(password.value, confirmPassword.value)
+        confirmPasswordErrMsg.value = if (isConfirmPasswordValid.value) "" else "Las contraseñas no coinciden"
 
         enabledSignupButton()
     }
