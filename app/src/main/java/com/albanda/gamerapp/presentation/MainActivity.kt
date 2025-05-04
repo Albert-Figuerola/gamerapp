@@ -14,7 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.albanda.gamerapp.presentation.navigation.AppNavigation
 import com.albanda.gamerapp.presentation.screens.login.LoginScreen
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController

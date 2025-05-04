@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -44,12 +46,20 @@ import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
 fun SignupContent() {
-    Box(
-        modifier = Modifier.fillMaxWidth()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
-        BoxHeader()
-        CardForm()
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            BoxHeader()
+            CardForm()
+        }
+        Spacer(modifier = Modifier.height(32.dp))
     }
+
 }
 
 @Composable
@@ -92,7 +102,8 @@ fun CardForm() {
     }
 
     Card(
-        modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
+        modifier = Modifier
+            .padding(start = 40.dp, end = 40.dp, top = 200.dp),
         colors = CardDefaults.cardColors(containerColor = DarkGray500)
     ) {
         Column(
@@ -126,7 +137,7 @@ fun CardForm() {
             )
             
             DefaultTextFiled(
-                modifier = Modifier.padding(top = 6.dp),
+                modifier = Modifier.padding(top = 0.dp),
                 value = email,
                 onValueChange = { email = it },
                 label = "Correo electrónico",
@@ -152,7 +163,7 @@ fun CardForm() {
             }
 
             DefaultTextFiled(
-                modifier = Modifier.padding(top = 6.dp),
+                modifier = Modifier.padding(top = 0.dp),
                 value = password,
                 onValueChange = { password = it },
                 label = "Password",
@@ -163,7 +174,7 @@ fun CardForm() {
             )
 
             DefaultTextFiled(
-                modifier = Modifier.padding(top = 6.dp),
+                modifier = Modifier.padding(top = 0.dp),
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 label = "Password",
