@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.login.components
+package com.albanda.gamerapp.presentation.screens.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

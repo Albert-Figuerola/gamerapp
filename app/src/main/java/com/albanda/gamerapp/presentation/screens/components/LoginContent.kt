@@ -1,9 +1,10 @@
-package com.albanda.gamerapp.presentation.screens.login.components
+package com.albanda.gamerapp.presentation.screens.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -51,15 +52,17 @@ fun LoginContent() {
 
 @Composable
 fun BoxHeader() {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .height(250.dp)
-        .background(Red500)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+            .background(Red500)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(Modifier.height(32.dp))
             Image(
                 modifier = Modifier.height(130.dp),
                 painter = painterResource(id = R.drawable.control),
@@ -107,7 +110,7 @@ fun CardForm() {
                 fontSize = 12.sp,
                 color = Color.Gray
             )
-            
+
             DefaultTextFiled(
                 modifier = Modifier.padding(top = 16.dp),
                 value = email,
@@ -125,7 +128,7 @@ fun CardForm() {
                     R.drawable.visibility
                 }
 
-                IconButton(onClick = { hideText = !hideText } ) {
+                IconButton(onClick = { hideText = !hideText }) {
                     Icon(
                         painter = painterResource(id = image),
                         contentDescription = "",
@@ -146,6 +149,9 @@ fun CardForm() {
             )
 
             DefaultButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 32.dp),
                 text = "INICIAR SESIÓN",
                 onClick = { }
             )

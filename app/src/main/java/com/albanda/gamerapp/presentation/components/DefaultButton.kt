@@ -1,8 +1,6 @@
 package com.albanda.gamerapp.presentation.components
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -19,16 +17,14 @@ import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
 fun DefaultButton(
+    modifier: Modifier,
     text: String,
     onClick: () -> Unit,
     color: Color = Red500,
     icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward
 ) {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
-            .padding(top = 32.dp, bottom = 32.dp),
+        modifier = modifier,
         colors = ButtonDefaults.buttonColors(containerColor = color),
         onClick = { onClick() }
     ) {
