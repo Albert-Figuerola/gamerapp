@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.ui.theme
+package com.albanda.gamerapp.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

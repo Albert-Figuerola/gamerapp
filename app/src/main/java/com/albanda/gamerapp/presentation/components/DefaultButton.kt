@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.components
+package com.albanda.gamerapp.presentation.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.albanda.gamerapp.ui.theme.Red500
+import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
 fun DefaultButton(

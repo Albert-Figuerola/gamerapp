@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.screens.login
+package com.albanda.gamerapp.presentation.screens.login
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,20 +8,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.albanda.gamerapp.screens.login.components.LoginBottomBar
-import com.albanda.gamerapp.screens.login.components.LoginContent
-import com.albanda.gamerapp.ui.theme.GamerAppTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.albanda.gamerapp.presentation.screens.login.components.LoginBottomBar
+import com.albanda.gamerapp.presentation.screens.login.components.LoginContent
+import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
             LoginContent()
         },
         bottomBar = {
-            LoginBottomBar()
+            LoginBottomBar(navController)
         }
     )
 }
@@ -34,7 +36,7 @@ fun PreviewLoginScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LoginScreen()
+            LoginScreen(rememberNavController())
         }
     }
 }
