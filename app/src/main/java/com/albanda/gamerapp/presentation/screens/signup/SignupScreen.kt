@@ -22,7 +22,7 @@ fun SignupScreen(navController: NavHostController) {
             DefaultTopBar(
                 title = "Nuevo usuario",
                 upAvailable = true,
-                navController = navController
+                navHostController = navController
             )
         },
         content = {

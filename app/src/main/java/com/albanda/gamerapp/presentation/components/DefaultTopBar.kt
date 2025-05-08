@@ -19,7 +19,7 @@ import com.albanda.gamerapp.presentation.ui.theme.Red500
 fun DefaultTopBar(
     title: String,
     upAvailable: Boolean = false,
-    navController: NavHostController? = null
+    navHostController: NavHostController? = null
 ) {
     TopAppBar(
         title = {
@@ -31,7 +31,7 @@ fun DefaultTopBar(
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Red500),
         navigationIcon = {
             if (upAvailable) {
-                IconButton(onClick = { navController?.popBackStack() }) {
+                IconButton(onClick = { navHostController?.popBackStack() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "",

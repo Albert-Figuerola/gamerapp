@@ -16,15 +16,15 @@ import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navHostController: NavHostController) {
 
     Scaffold(
         topBar = {},
         content = {
-            LoginContent()
+            LoginContent(navHostController)
         },
         bottomBar = {
-            LoginBottomBar(navController)
+            LoginBottomBar(navHostController)
         }
     )
 }

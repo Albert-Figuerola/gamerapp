@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,16 +36,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.albanda.gamerapp.R
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.presentation.components.DefaultButton
 import com.albanda.gamerapp.presentation.components.DefaultTextFiled
+import com.albanda.gamerapp.presentation.navigation.AppScreen
 import com.albanda.gamerapp.presentation.screens.login.LoginViewModel
 import com.albanda.gamerapp.presentation.ui.theme.DarkGray500
 import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
-fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginContent(
+    navHostController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     val loginFlow = viewModel.loginFlow.collectAsState()
 
     Box(
@@ -158,7 +164,7 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
     }
 
     loginFlow.value.let { state ->
-        when(state) {
+        when (state) {
             Response.Loading -> {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -167,66 +173,25 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
                     CircularProgressIndicator()
                 }
             }
+
             is Response.Success<*> -> {
-                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
+                LaunchedEffect(Unit) {
+                    navHostController.navigate(route = AppScreen.Profile.route) {
+                        popUpTo(AppScreen.Login.route) { inclusive = true }
+                    }
+                }
             }
 
             is Response.Failure<*> -> {
-                Toast.makeText(LocalContext.current, state.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    LocalContext.current,
+                    state.exception?.message ?: "Error desconocido",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
-            null -> { }
+            null -> {}
         }
     }
 
 }
-
-/*@Composable
-fun PasswordTextField() {
-    //var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-
-    OutlinedTextField(
-        modifier = Modifier.padding(top = 6.dp),
-        value = "",
-        onValueChange = {},
-        label = {
-            Text("Contraseña")
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = "",
-                tint = Color.White
-            )
-        },
-        trailingIcon = {
-            val image = if (passwordVisible) {
-                R.drawable.visibility
-            } else {
-                R.drawable.visibility_off
-            }
-
-            IconButton(onClick = { passwordVisible = !passwordVisible } ) {
-                Icon(
-                    painter = painterResource(id = image),
-                    contentDescription = "",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}*/
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun PreviewLoginContent() {
-//    GamerAppTheme(darkTheme = true) {
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            LoginContent(null)
-//        }
-//    }
-//}
