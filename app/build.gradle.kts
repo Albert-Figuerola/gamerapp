@@ -6,6 +6,7 @@ plugins {
     // Added for DAGGER HILT
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -61,13 +62,15 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Added for NAVIGATION between screens
-    implementation("androidx.navigation:navigation-compose:2.8.9")
+    implementation("androidx.navigation:navigation-compose:2.0.0")
 
     // Added for DAGGER HILT
     implementation("com.google.dagger:hilt-android:2.56.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.56.1")
 
+    // Added for Firebase
+    implementation(libs.firebase.auth)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
