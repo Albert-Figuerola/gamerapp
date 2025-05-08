@@ -5,20 +5,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.albanda.gamerapp.presentation.screens.login.LoginScreen
+import com.albanda.gamerapp.presentation.screens.profile.ProfileScreen
 import com.albanda.gamerapp.presentation.screens.signup.SignupScreen
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navHostController: NavHostController) {
 
     NavHost(
-        navController = navController,
+        navController = navHostController,
         startDestination = AppScreen.Login.route
     ) {
         composable(route = AppScreen.Login.route) {
-            LoginScreen(navController)
+            LoginScreen(navHostController)
         }
         composable(route = AppScreen.Signup.route) {
-            SignupScreen(navController)
+            SignupScreen(navHostController)
+        }
+        composable(route = AppScreen.Profile.route) {
+            ProfileScreen(navHostController)
         }
     }
 

@@ -5,6 +5,7 @@ import com.albanda.gamerapp.domain.repository.AuthRepository
 import com.albanda.gamerapp.domain.usecase.auth.AuthUseCases
 import com.albanda.gamerapp.domain.usecase.auth.GetCurrentUser
 import com.albanda.gamerapp.domain.usecase.auth.Login
+import com.albanda.gamerapp.domain.usecase.auth.Logout
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -23,6 +24,7 @@ object AppModule {
     @Provides
     fun provideAuthUseCases(authRepository: AuthRepository) = AuthUseCases(
         getCurrentUser = GetCurrentUser(authRepository),
-        login = Login(authRepository)
+        login = Login(authRepository),
+        logout = Logout(authRepository)
     )
 }

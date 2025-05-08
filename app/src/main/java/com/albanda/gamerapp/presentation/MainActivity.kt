@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     navController = rememberNavController()
                     LoginScreen(navController)
-                    AppNavigation(navController = navController)
+                    AppNavigation(navHostController = navController)
                 }
             }
         }
