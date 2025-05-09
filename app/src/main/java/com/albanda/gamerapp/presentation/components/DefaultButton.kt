@@ -20,24 +20,29 @@ import com.albanda.gamerapp.presentation.ui.theme.Red500
 fun DefaultButton(
     modifier: Modifier,
     text: String,
+    colorContent: Color? = null,
     onClick: () -> Unit,
     color: Color = Red500,
     icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward,
-    enable: Boolean = true
+    enable: Boolean = true,
 ) {
     Column() {
         Button(
             modifier = modifier,
             onClick = { onClick() },
             colors = ButtonDefaults.buttonColors(containerColor = color),
-            enabled = enable
+            enabled = enable,
         ) {
             Icon(
+                tint = colorContent ?: Color.White,
                 imageVector = icon,
                 contentDescription = ""
             )
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = text)
+            Text(
+                color = colorContent ?: Color.White,
+                text = text
+            )
         }
     }
 }
