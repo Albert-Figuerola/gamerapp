@@ -8,16 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
+import androidx.navigation.NavHostController
 
 @Composable
-fun SignupContent() {
+fun SignupContent(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,22 +24,24 @@ fun SignupContent() {
             modifier = Modifier.fillMaxWidth()
         ) {
             BoxHeader()
-            CardForm()
+            CardForm(
+                navHostController = navHostController
+            )
         }
         Spacer(modifier = Modifier.height(32.dp))
     }
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewSignupContent() {
-    GamerAppTheme(darkTheme = true) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            SignupContent()
-        }
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun PreviewSignupContent() {
+//    GamerAppTheme(darkTheme = true) {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            SignupContent()
+//        }
+//    }
+//}
