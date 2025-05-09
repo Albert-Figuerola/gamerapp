@@ -38,6 +38,15 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
     private val _signupFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
     val signupFlow: StateFlow<Response<FirebaseUser>?> = _signupFlow
 
+    fun onSignup() {
+        val user = User(
+            username.value,
+            email.value,
+            password.value
+        )
+        signup(user)
+    }
+
     fun signup(user: User) = viewModelScope.launch {
         _signupFlow.value = Response.Loading
         val result = authUseCases.signup(user)
