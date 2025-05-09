@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.screens.signup.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -153,9 +154,10 @@ fun CardForm(
         }
     }
 
-    signupFlow.value.let {
-        when (it) {
+    signupFlow.value.let { state ->
+        when (state) {
             Response.Loading -> {
+                Log.i("CardForm", "Loading")
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxSize()
@@ -166,16 +168,15 @@ fun CardForm(
 
             is Response.Success<*> -> {
                 LaunchedEffect(Unit) {
-                    navHostController.navigate(route = AppScreen.Profile.route) {
-                        popUpTo(AppScreen.Login.route) { inclusive = true }
-                    }
+                    navHostController.popBackStack(AppScreen.Login.route, inclusive = true)
+                    navHostController.navigate(route = AppScreen.Profile.route)
                 }
             }
 
             is Response.Failure<*> -> {
                 Toast.makeText(
                     LocalContext.current,
-                    it.exception?.message ?: "Error desconocido",
+                    state.exception?.message ?: "Error desconocido",
                     Toast.LENGTH_LONG
                 ).show()
             }

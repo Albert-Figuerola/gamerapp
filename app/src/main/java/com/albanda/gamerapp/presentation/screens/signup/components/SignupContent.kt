@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun SignupContent(navHostController: NavHostController) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,16 +33,3 @@ fun SignupContent(navHostController: NavHostController) {
     }
 
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun PreviewSignupContent() {
-//    GamerAppTheme(darkTheme = true) {
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            SignupContent()
-//        }
-//    }
-//}
