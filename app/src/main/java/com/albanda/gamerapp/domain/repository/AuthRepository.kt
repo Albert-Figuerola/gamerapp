@@ -13,5 +13,4 @@ interface AuthRepository {
 
     fun logout()
 
-
 }
