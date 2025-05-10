@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.domain.model.User
 import com.albanda.gamerapp.domain.usecase.auth.AuthUseCases
+import com.albanda.gamerapp.domain.usecase.user.UserUseCases
 import com.albanda.gamerapp.presentation.screens.utils.AuthFormValidator
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
+class SignupViewModel @Inject constructor(
+    private val authUseCases: AuthUseCases,
+    private val userUseCases: UserUseCases
+) : ViewModel() {
     var username: MutableState<String> = mutableStateOf("")
     var isUsernameValid: MutableState<Boolean> = mutableStateOf(false)
     var usernameErrMsg: MutableState<String> = mutableStateOf("")
@@ -38,13 +42,19 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
     private val _signupFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
     val signupFlow: StateFlow<Response<FirebaseUser>?> = _signupFlow
 
+    var user = User()
+
     fun onSignup() {
-        val user = User(
-            username.value,
-            email.value,
-            password.value
-        )
+        user.username = username.value
+        user.email = email.value
+        user.password = password.value
         signup(user)
+    }
+
+    fun createUser() = viewModelScope.launch {
+        user.id = authUseCases.getCurrentUser()!!.uid
+        user.password = ""
+        userUseCases.createUser(user)
     }
 
     fun signup(user: User) = viewModelScope.launch {
@@ -75,8 +85,10 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
     }
 
     fun validateConfirmPassword() {
-        isConfirmPasswordValid.value = AuthFormValidator.isConfirmPasswordValid(password.value, confirmPassword.value)
-        confirmPasswordErrMsg.value = if (isConfirmPasswordValid.value) "" else "Las contraseñas no coinciden"
+        isConfirmPasswordValid.value =
+            AuthFormValidator.isConfirmPasswordValid(password.value, confirmPassword.value)
+        confirmPasswordErrMsg.value =
+            if (isConfirmPasswordValid.value) "" else "Las contraseñas no coinciden"
 
         enabledSignupButton()
     }

@@ -62,15 +62,20 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Added for NAVIGATION between screens
-    implementation("androidx.navigation:navigation-compose:2.0.0")
+    implementation("androidx.navigation:navigation-compose:2.9.0")
 
     // Added for DAGGER HILT
     implementation("com.google.dagger:hilt-android:2.56.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.56.1")
 
-    // Added for Firebase
+    // Added for Firebase Auth
     implementation(libs.firebase.auth)
+
+    // Added for Firebase Database
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    // Declare the dependency for the Cloud Firestore library
+    implementation("com.google.firebase:firebase-firestore")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

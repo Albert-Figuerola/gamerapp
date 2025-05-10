@@ -168,6 +168,7 @@ fun CardForm(
 
             is Response.Success<*> -> {
                 LaunchedEffect(Unit) {
+                    signupViewModel.createUser()
                     navHostController.popBackStack(AppScreen.Login.route, inclusive = true)
                     navHostController.navigate(route = AppScreen.Profile.route)
                 }
