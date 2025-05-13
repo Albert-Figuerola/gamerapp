@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.albanda.gamerapp.presentation.screens.login.components.Login
 import com.albanda.gamerapp.presentation.screens.login.components.LoginBottomBar
 import com.albanda.gamerapp.presentation.screens.login.components.LoginContent
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
@@ -21,12 +22,13 @@ fun LoginScreen(navHostController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
-            LoginContent(navHostController)
+            LoginContent()
         },
         bottomBar = {
             LoginBottomBar(navHostController)
         }
     )
+    Login(navHostController = navHostController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)
