@@ -19,4 +19,5 @@ object AuthFormValidator {
     fun isUsernameValid(username: String): Boolean {
         return username.length >= 5
     }
+
 }
