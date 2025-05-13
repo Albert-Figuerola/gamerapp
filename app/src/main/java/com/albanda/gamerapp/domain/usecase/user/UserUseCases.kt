@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.domain.usecase.user
 
 data class UserUseCases(
-    val createUser: CreateUser
+    val createUser: CreateUser,
+    val getUseById: GetUseById
 )

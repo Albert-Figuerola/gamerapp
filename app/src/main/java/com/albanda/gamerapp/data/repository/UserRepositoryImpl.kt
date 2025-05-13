@@ -4,6 +4,9 @@ import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.domain.model.User
 import com.albanda.gamerapp.domain.repository.UserRepository
 import com.google.firebase.firestore.CollectionReference
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -16,6 +19,16 @@ class UserRepositoryImpl @Inject constructor(private val usersRef: CollectionRef
         } catch (e: Exception) {
             e.printStackTrace()
             Response.Failure(e)
+        }
+    }
+
+    override fun getUserById(userId: String): Flow<User> = callbackFlow {
+        val snapshotListener = usersRef.document(userId).addSnapshotListener { snapshot, e ->
+            val user = snapshot?.toObject(User::class.java) ?: User()
+            trySend(user)
+        }
+        awaitClose {
+            snapshotListener.remove()
         }
     }
 }

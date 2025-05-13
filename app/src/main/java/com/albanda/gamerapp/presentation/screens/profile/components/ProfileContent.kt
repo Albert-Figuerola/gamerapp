@@ -74,13 +74,13 @@ fun ProfileContent(
         Spacer(modifier = Modifier.height(55.dp))
 
         Text(
-            text = "Nombre de usuario",
+            text = profileViewModel.userData.username,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic
         )
         Text(
-            text = "Mail del usuario",
+            text = profileViewModel.userData.email,
             fontSize = 15.sp,
             fontStyle = FontStyle.Italic
         )
