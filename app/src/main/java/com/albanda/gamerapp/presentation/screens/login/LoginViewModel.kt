@@ -20,11 +20,15 @@ class LoginViewModel @Inject constructor(
     var state by mutableStateOf(LoginState())
         private set
 
-    var isEmailValid: Boolean by mutableStateOf(false)
-    var emailErrMsg: String by mutableStateOf("")
+    var isEmailValid  by mutableStateOf(false)
+        private set
+    var emailErrMsg  by mutableStateOf("")
+        private set
 
-    var isPasswordValid: Boolean by mutableStateOf(false)
-    var passwordErrMsg: String by mutableStateOf("")
+    var isPasswordValid  by mutableStateOf(false)
+        private set
+    var passwordErrMsg  by mutableStateOf("")
+        private set
 
     var isEnabledLoginButton = false
 

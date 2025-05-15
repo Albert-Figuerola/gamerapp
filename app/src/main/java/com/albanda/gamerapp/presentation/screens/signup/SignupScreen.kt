@@ -11,25 +11,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.albanda.gamerapp.presentation.components.DefaultTopBar
+import com.albanda.gamerapp.presentation.screens.signup.components.SignUp
 import com.albanda.gamerapp.presentation.screens.signup.components.SignupContent
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SignupScreen(navController: NavHostController) {
+fun SignupScreen(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             DefaultTopBar(
                 title = "Nuevo usuario",
                 upAvailable = true,
-                navHostController = navController
+                navHostController = navHostController
             )
         },
         content = {
-            SignupContent(navController)
+            SignupContent(navHostController)
         },
         bottomBar = {}
     )
+    SignUp(navHostController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)
