@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var navController: NavHostController
+    private lateinit var navHostController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    navController = rememberNavController()
-                    LoginScreen(navController)
-                    AppNavigation(navHostController = navController)
+                    navHostController = rememberNavController()
+                    LoginScreen(navHostController)
+                    AppNavigation(navHostController = navHostController)
                 }
             }
         }

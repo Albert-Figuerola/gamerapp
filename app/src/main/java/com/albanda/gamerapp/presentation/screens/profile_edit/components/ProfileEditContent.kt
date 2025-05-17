@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.signup.components
+package com.albanda.gamerapp.presentation.screens.profile_edit.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SignupContent() {
+fun ProfileEditContent() {
 
     Column(
         modifier = Modifier

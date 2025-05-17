@@ -12,6 +12,7 @@ import com.albanda.gamerapp.domain.usecase.auth.Logout
 import com.albanda.gamerapp.domain.usecase.auth.Signup
 import com.albanda.gamerapp.domain.usecase.user.CreateUser
 import com.albanda.gamerapp.domain.usecase.user.GetUseById
+import com.albanda.gamerapp.domain.usecase.user.UpdateUser
 import com.albanda.gamerapp.domain.usecase.user.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -52,6 +53,7 @@ object AppModule {
     @Provides
     fun provideUserUseCases(userRepository: UserRepository) = UserUseCases (
         createUser = CreateUser(userRepository),
-        getUseById = GetUseById(userRepository)
+        getUseById = GetUseById(userRepository),
+        updateUser = UpdateUser(userRepository)
     )
 }

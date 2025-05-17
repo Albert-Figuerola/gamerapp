@@ -94,7 +94,7 @@ fun ProfileContent(
             color = Color.White,
             colorContent = Color.Black,
             onClick = {
-
+                navHostController.navigate(route = AppScreen.ProfileEdit.passUser(profileViewModel.userData.toJson()))
             }
         )
 
