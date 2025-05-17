@@ -77,6 +77,9 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     implementation("com.google.firebase:firebase-firestore")
 
+    // GSON - Converts objects to string
+    implementation("com.google.code.gson:gson:2.11.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
