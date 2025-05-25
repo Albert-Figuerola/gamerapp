@@ -9,7 +9,7 @@ import com.albanda.gamerapp.presentation.components.ProgressBar
 import com.albanda.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 
 @Composable
-fun UpdateUser(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) {
+fun ProfileUpdate(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) {
 
     when (val updateResponse = profileUpdateViewModel.updateResponse) {
         Response.Loading -> ProgressBar()

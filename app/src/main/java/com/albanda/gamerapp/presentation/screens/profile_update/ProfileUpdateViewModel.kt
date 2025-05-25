@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.screens.profile_update
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -33,8 +34,20 @@ class ProfileUpdateViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf(false)
+
     init {
         state = state.copy(username = user.username)
+    }
+
+    fun onCameraResult(result: Boolean) {
+        hasImage = result
+    }
+
+    fun onGalleryResult(uri: Uri?) {
+        hasImage = uri != null
+        imageUri = uri
     }
 
     fun onUpdate() {
