@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.profile_edit.components
+package com.albanda.gamerapp.presentation.screens.profile_update.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
