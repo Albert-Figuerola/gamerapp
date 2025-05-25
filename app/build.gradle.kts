@@ -80,6 +80,9 @@ dependencies {
     // GSON - Converts objects to string
     implementation("com.google.code.gson:gson:2.11.0")
 
+    // Async image
+    implementation("io.coil-kt.coil3:coil-compose:3.2.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

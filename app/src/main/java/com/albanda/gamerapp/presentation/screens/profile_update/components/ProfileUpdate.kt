@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.profile_edit.components
+package com.albanda.gamerapp.presentation.screens.profile_update.components
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -6,12 +6,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.presentation.components.ProgressBar
-import com.albanda.gamerapp.presentation.screens.profile_edit.ProfileEditViewModel
+import com.albanda.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 
 @Composable
-fun UpdateUser(profileEditViewModel: ProfileEditViewModel = hiltViewModel()) {
+fun UpdateUser(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) {
 
-    when (val updateResponse = profileEditViewModel.updateResponse) {
+    when (val updateResponse = profileUpdateViewModel.updateResponse) {
         Response.Loading -> ProgressBar()
 
         is Response.Success<*> -> Toast.makeText(

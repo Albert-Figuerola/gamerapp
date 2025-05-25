@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.profile_edit
+package com.albanda.gamerapp.presentation.screens.profile_update
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,11 +15,11 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ProfileEditViewModel @Inject constructor(
+class ProfileUpdateViewModel @Inject constructor(
     saveStateHandle: SavedStateHandle,
     private val userUseCases: UserUseCases
 ) : ViewModel() {
-    var state by mutableStateOf(ProfileEditState())
+    var state by mutableStateOf(ProfileUpdateState())
         private set
 
     var isUsernameValid by mutableStateOf(false)

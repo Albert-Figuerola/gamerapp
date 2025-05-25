@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.profile_edit.components
+package com.albanda.gamerapp.presentation.screens.profile_update.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,15 +17,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.albanda.gamerapp.presentation.components.DefaultButton
 import com.albanda.gamerapp.presentation.components.DefaultTextFiled
-import com.albanda.gamerapp.presentation.screens.profile_edit.ProfileEditViewModel
+import com.albanda.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 import com.albanda.gamerapp.presentation.ui.theme.DarkGray500
 
 @Composable
 fun CardForm(
-    profileEditViewModel: ProfileEditViewModel = hiltViewModel()
+    profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()
 ) {
 
-    val state = profileEditViewModel.state
+    val state = profileUpdateViewModel.state
 
     Card(
         modifier = Modifier
@@ -57,18 +57,18 @@ fun CardForm(
             DefaultTextFiled(
                 modifier = Modifier.padding(top = 16.dp),
                 value = state.username,
-                onValueChange = { profileEditViewModel.onUsernameInput(it) },
+                onValueChange = { profileUpdateViewModel.onUsernameInput(it) },
                 label = "Nombre de usuario",
                 leadingIcon = Icons.Default.Person,
-                errorMsg = profileEditViewModel.usernameErrMsg,
-                validateField = { profileEditViewModel.validateUsername() }
+                errorMsg = profileUpdateViewModel.usernameErrMsg,
+                validateField = { profileUpdateViewModel.validateUsername() }
             )
 
             DefaultButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 32.dp),
-                onClick = { profileEditViewModel.onUpdate() },
+                onClick = { profileUpdateViewModel.onUpdate() },
                 text = "ACTUALIZAR DATOS"
             )
         }

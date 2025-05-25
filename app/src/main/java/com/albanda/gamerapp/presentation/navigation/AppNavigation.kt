@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.albanda.gamerapp.presentation.screens.login.LoginScreen
 import com.albanda.gamerapp.presentation.screens.profile.ProfileScreen
-import com.albanda.gamerapp.presentation.screens.profile_edit.ProfileEditScreen
+import com.albanda.gamerapp.presentation.screens.profile_update.ProfileEditScreen
 import com.albanda.gamerapp.presentation.screens.signup.SignupScreen
 
 @Composable
