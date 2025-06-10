@@ -2,6 +2,7 @@ package com.albanda.gamerapp.domain.usecase.user
 
 data class UserUseCases(
     val createUser: CreateUser,
-    val getUseById: GetUseById,
-    val updateUser: UpdateUser
+    val getUserById: GetUserById,
+    val updateUser: UpdateUser,
+    val saveImage: SaveImage
 )
