@@ -76,12 +76,16 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
     // Declare the dependency for the Cloud Firestore library
     implementation("com.google.firebase:firebase-firestore")
+    // Added for Firebase Storage
+    implementation("com.google.firebase:firebase-storage")
 
     // GSON - Converts objects to string
     implementation("com.google.code.gson:gson:2.11.0")
 
     // Async image
     implementation("io.coil-kt.coil3:coil-compose:3.2.0")
+
+    implementation("commons-io:commons-io:2.19.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

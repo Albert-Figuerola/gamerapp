@@ -1,11 +1,9 @@
 package com.albanda.gamerapp.presentation.screens.profile_update
 
 import android.content.Context
-import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import kotlinx.coroutines.launch
+import java.io.File
 
 @HiltViewModel
 class ProfileUpdateViewModel @Inject constructor(
@@ -40,7 +39,12 @@ class ProfileUpdateViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var saveImageResponse by mutableStateOf<Response<String>?>(null)
+        private set
+
     var imageUri by mutableStateOf("")
+
+    var file: File? = null
 
     val resultingActivityHandler = ResultingActivityHandler()
 
@@ -48,9 +52,18 @@ class ProfileUpdateViewModel @Inject constructor(
         state = state.copy(username = user.username)
     }
 
+    fun saveImage() = viewModelScope.launch {
+        if (file != null) {
+            saveImageResponse = Response.Loading
+            val result = userUseCases.saveImage(file!!)
+            saveImageResponse = result
+        }
+    }
+
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
+            file = ComposeFileProvider.createFileFromUri(context, result)
             imageUri = result.toString()
         }
     }
@@ -59,15 +72,15 @@ class ProfileUpdateViewModel @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
             imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+            file = File(imageUri)
         }
-
     }
 
-    fun onUpdate() {
+    fun onUpdate(url: String) {
         val myUser = User(
             id = user.id,
             username = state.username,
-            image = ""
+            image = url
         )
         updateUser(myUser)
     }

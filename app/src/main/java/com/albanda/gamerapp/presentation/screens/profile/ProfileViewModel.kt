@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getUserById() = viewModelScope.launch {
-        userUseCases.getUseById(currentUserId!!.uid).collect() { user ->
+        userUseCases.getUserById(currentUserId!!.uid).collect() { user ->
             userData = user
         }
     }

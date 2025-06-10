@@ -68,7 +68,7 @@ fun CardForm(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 32.dp),
-                onClick = { profileUpdateViewModel.onUpdate() },
+                onClick = { profileUpdateViewModel.saveImage() },
                 text = "ACTUALIZAR DATOS"
             )
         }

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import com.albanda.gamerapp.presentation.components.DefaultTopBar
 import com.albanda.gamerapp.presentation.screens.profile_update.components.ProfileUpdateContent
 import com.albanda.gamerapp.presentation.screens.profile_update.components.ProfileUpdate
+import com.albanda.gamerapp.presentation.screens.profile_update.components.SaveImage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -24,5 +25,6 @@ fun ProfileEditScreen(navHostController: NavHostController) {
         },
         bottomBar = {}
     )
+    SaveImage()
     ProfileUpdate()
 }
