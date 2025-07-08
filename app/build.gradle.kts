@@ -84,7 +84,7 @@ dependencies {
 
     // Async image
     implementation("io.coil-kt.coil3:coil-compose:3.2.0")
-
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.2.0")
     implementation("commons-io:commons-io:2.19.0")
 
     testImplementation(libs.junit)

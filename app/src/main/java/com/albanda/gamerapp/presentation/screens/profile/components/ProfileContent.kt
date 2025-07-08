@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.screens.profile.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,8 +33,6 @@ import com.albanda.gamerapp.R
 import com.albanda.gamerapp.presentation.components.DefaultButton
 import com.albanda.gamerapp.presentation.navigation.AppScreen
 import com.albanda.gamerapp.presentation.screens.profile.ProfileViewModel
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(
@@ -46,7 +45,9 @@ fun ProfileContent(
     ) {
         Box() {
             Image(
-                modifier = Modifier.fillMaxWidth().height(200.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
                 alpha = 0.6f,
                 contentScale = ContentScale.Crop,
                 painter = painterResource(id = R.drawable.background),
@@ -67,22 +68,33 @@ fun ProfileContent(
                 )
 
                 Spacer(modifier = Modifier.height(55.dp))
-                println("Image: ${profileViewModel.userData.image}")
 
                 val imageUrl = profileViewModel.userData.image
-                if (imageUrl.isNotBlank()) {
+
+                Log.i("ProfileContent", "Image: $imageUrl")
+
+                if (imageUrl != "") {
                     AsyncImage(
                         modifier = Modifier
                             .size(115.dp)
                             .clip(CircleShape),
-                        model = profileViewModel.userData.image,
+                        model = imageUrl,
                         contentDescription = "User image",
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
+                        onLoading = { placeholder ->
+                            Log.d("AsyncImage", "Loading image...")
+                        },
+                        onError = { error ->
+                            Log.e("AsyncImage", "Error loading image: ${error.result.throwable.message}")
+                        },
+                        onSuccess = { success ->
+                            Log.d("AsyncImage", "Image loaded successfully!")
+                        }
                     )
                 } else {
                     Image(
                         modifier = Modifier.size(115.dp),
-                        painter =  painterResource(id = R.drawable.user),
+                        painter = painterResource(id = R.drawable.user),
                         contentDescription = "Profile background image"
                     )
                 }
@@ -112,8 +124,6 @@ fun ProfileContent(
             color = Color.White,
             colorContent = Color.Black,
             onClick = {
-                profileViewModel.userData.image = URLEncoder.encode(profileViewModel.userData.image,
-                    StandardCharsets.UTF_8.toString())
                 navHostController.navigate(route = AppScreen.ProfileEdit.passUser(profileViewModel.userData.toJson()))
             }
         )
@@ -126,7 +136,7 @@ fun ProfileContent(
             icon = Icons.AutoMirrored.Default.ExitToApp,
             onClick = {
                 profileViewModel.logout()
-                navHostController.navigate(route = AppScreen.Login.route){
+                navHostController.navigate(route = AppScreen.Login.route) {
                     popUpTo(AppScreen.Profile.route) { inclusive = true }
                 }
             }
