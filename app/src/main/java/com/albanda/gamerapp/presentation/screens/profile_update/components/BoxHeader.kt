@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.screens.profile_update.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,8 +49,13 @@ fun BoxHeader(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) 
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Spacer(Modifier.height(64.dp))
-            if (profileUpdateViewModel.imageUri != "") {
+
+            val image = profileUpdateViewModel.state.image
+            Log.i("BoxHeader", "Image: $image")
+
+            if (image != "") {
                 AsyncImage(
                     modifier = Modifier
                         .height(120.dp)
@@ -60,7 +65,7 @@ fun BoxHeader(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) 
                             dialogState.value = true
                         },
                     contentScale = ContentScale.Crop,
-                    model = profileUpdateViewModel.imageUri,
+                    model = image,
                     contentDescription = "Selected image"
                 )
             } else {
