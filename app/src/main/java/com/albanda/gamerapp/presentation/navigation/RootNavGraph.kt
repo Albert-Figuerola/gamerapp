@@ -6,33 +6,24 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.albanda.gamerapp.presentation.screens.login.LoginScreen
-import com.albanda.gamerapp.presentation.screens.profile.ProfileScreen
+import com.albanda.gamerapp.presentation.screens.home.HomeScreen
 import com.albanda.gamerapp.presentation.screens.profile_update.ProfileEditScreen
-import com.albanda.gamerapp.presentation.screens.signup.SignupScreen
 
 @Composable
-fun AppNavigation(navHostController: NavHostController) {
+fun RootNavGraph(navHostController: NavHostController) {
 
     NavHost(
         navController = navHostController,
-        startDestination = AppScreen.Login.route
+        route = Graph.ROOT,
+        startDestination = Graph.AUTHENTICATION
     ) {
-
-        composable(route = AppScreen.Login.route) {
-            LoginScreen(navHostController)
-        }
-
-        composable(route = AppScreen.Signup.route) {
-            SignupScreen(navHostController)
-        }
-
-        composable(route = AppScreen.Profile.route) {
-            ProfileScreen(navHostController)
+        authNavGraph(navHostController = navHostController)
+        composable(route = RootScreen.Home.route) {
+            HomeScreen()
         }
 
         composable(
-            route = AppScreen.ProfileEdit.route,
+            route = AuthScreen.ProfileEdit.route,
             arguments = listOf(navArgument("user") {
                 type = NavType.StringType
             })

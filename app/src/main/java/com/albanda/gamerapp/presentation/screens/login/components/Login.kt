@@ -8,7 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.presentation.components.ProgressBar
-import com.albanda.gamerapp.presentation.navigation.AppScreen
+import com.albanda.gamerapp.presentation.navigation.Graph
+import com.albanda.gamerapp.presentation.navigation.RootScreen
 import com.albanda.gamerapp.presentation.screens.login.LoginViewModel
 
 @Composable
@@ -24,8 +25,8 @@ fun Login(
 
         is Response.Success<*> -> {
             LaunchedEffect(Unit) {
-                navHostController.navigate(route = AppScreen.Profile.route) {
-                    popUpTo(AppScreen.Login.route) { inclusive = true }
+                navHostController.navigate(route = RootScreen.Home.route) {
+                    popUpTo(Graph.AUTHENTICATION) { inclusive = true }
                 }
             }
         }
