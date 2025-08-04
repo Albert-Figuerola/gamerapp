@@ -31,7 +31,7 @@ import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.albanda.gamerapp.R
 import com.albanda.gamerapp.presentation.components.DefaultButton
-import com.albanda.gamerapp.presentation.navigation.AppScreen
+import com.albanda.gamerapp.presentation.navigation.AuthScreen
 import com.albanda.gamerapp.presentation.screens.profile.ProfileViewModel
 
 @Composable
@@ -124,7 +124,7 @@ fun ProfileContent(
             color = Color.White,
             colorContent = Color.Black,
             onClick = {
-                navHostController.navigate(route = AppScreen.ProfileEdit.passUser(profileViewModel.userData.toJson()))
+                navHostController.navigate(route = AuthScreen.ProfileEdit.passUser(profileViewModel.userData.toJson()))
             }
         )
 
@@ -136,8 +136,8 @@ fun ProfileContent(
             icon = Icons.AutoMirrored.Default.ExitToApp,
             onClick = {
                 profileViewModel.logout()
-                navHostController.navigate(route = AppScreen.Login.route) {
-                    popUpTo(AppScreen.Profile.route) { inclusive = true }
+                navHostController.navigate(route = AuthScreen.Login.route) {
+                    popUpTo(AuthScreen.Profile.route) { inclusive = true }
                 }
             }
         )

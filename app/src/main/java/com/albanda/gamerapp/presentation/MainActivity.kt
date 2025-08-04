@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.albanda.gamerapp.presentation.navigation.AppNavigation
+import com.albanda.gamerapp.presentation.navigation.RootNavGraph
 import com.albanda.gamerapp.presentation.screens.login.LoginScreen
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     navHostController = rememberNavController()
                     LoginScreen(navHostController)
-                    AppNavigation(navHostController = navHostController)
+                    RootNavGraph(navHostController = navHostController)
                 }
             }
         }
