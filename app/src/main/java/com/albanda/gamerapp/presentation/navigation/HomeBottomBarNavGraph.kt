@@ -1,6 +1,10 @@
 package com.albanda.gamerapp.presentation.navigation
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,4 +31,28 @@ fun HomeBottomBarNavGraph(navHostController: NavHostController) {
             ProfileScreen(navHostController)
         }
     }
+}
+
+sealed class HomeBottomBarScreen (
+    val route: String,
+    val title: String,
+    val icon: ImageVector
+) {
+    object Posts: HomeBottomBarScreen(
+        route = "posts",
+        title = "Posts",
+        icon = Icons.AutoMirrored.Filled.List
+    )
+
+    object MyPosts: HomeBottomBarScreen(
+        route = "my_posts",
+        title = "My posts",
+        icon = Icons.AutoMirrored.Filled.List
+    )
+
+    object Profile: HomeBottomBarScreen(
+        route = "profile",
+        title = "Profile",
+        icon = Icons.Default.Person
+    )
 }

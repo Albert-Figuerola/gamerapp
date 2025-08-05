@@ -36,3 +36,7 @@ fun RootNavGraph(navHostController: NavHostController) {
     }
 
 }
+
+sealed class RootScreen (val route: String) {
+    object Home: RootScreen("home")
+}
