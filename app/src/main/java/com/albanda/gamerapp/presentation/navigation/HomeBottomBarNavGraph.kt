@@ -30,6 +30,8 @@ fun HomeBottomBarNavGraph(navHostController: NavHostController) {
         composable(route = HomeBottomBarScreen.Profile.route) {
             ProfileScreen(navHostController)
         }
+
+        detailsNavGraph(navHostController)
     }
 }
 

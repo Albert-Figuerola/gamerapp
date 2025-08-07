@@ -1,5 +1,8 @@
 package com.albanda.gamerapp.presentation.screens.profile.components
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -21,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,15 +34,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.albanda.gamerapp.R
+import com.albanda.gamerapp.presentation.MainActivity
 import com.albanda.gamerapp.presentation.components.DefaultButton
-import com.albanda.gamerapp.presentation.navigation.AuthScreen
+import com.albanda.gamerapp.presentation.navigation.DetailsScreen
 import com.albanda.gamerapp.presentation.screens.profile.ProfileViewModel
 
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun ProfileContent(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     navHostController: NavHostController
 ) {
+    val activity = LocalContext.current as? Activity
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -124,7 +132,7 @@ fun ProfileContent(
             color = Color.White,
             colorContent = Color.Black,
             onClick = {
-                navHostController.navigate(route = AuthScreen.ProfileEdit.passUser(profileViewModel.userData.toJson()))
+                navHostController.navigate(route = DetailsScreen.ProfileUpdate.passUser(profileViewModel.userData.toJson()))
             }
         )
 
@@ -136,9 +144,8 @@ fun ProfileContent(
             icon = Icons.AutoMirrored.Default.ExitToApp,
             onClick = {
                 profileViewModel.logout()
-                navHostController.navigate(route = AuthScreen.Login.route) {
-                    popUpTo(AuthScreen.Profile.route) { inclusive = true }
-                }
+                activity?.finish()
+                activity?.startActivity(Intent(activity, MainActivity::class.java))
             }
         )
     }
