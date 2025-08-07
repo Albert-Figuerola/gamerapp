@@ -2,12 +2,9 @@ package com.albanda.gamerapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.albanda.gamerapp.presentation.screens.home.HomeScreen
-import com.albanda.gamerapp.presentation.screens.profile_update.ProfileEditScreen
 
 @Composable
 fun RootNavGraph(navHostController: NavHostController) {
@@ -18,25 +15,9 @@ fun RootNavGraph(navHostController: NavHostController) {
         startDestination = Graph.AUTHENTICATION
     ) {
         authNavGraph(navHostController = navHostController)
-        composable(route = RootScreen.Home.route) {
+        composable(route = Graph.HOME) {
             HomeScreen()
         }
-
-        composable(
-            route = AuthScreen.ProfileEdit.route,
-            arguments = listOf(navArgument("user") {
-                type = NavType.StringType
-            })
-        ) {
-            it.arguments?.getString("user")?.let {
-                ProfileEditScreen(navHostController)
-            }
-        }
-
     }
 
-}
-
-sealed class RootScreen (val route: String) {
-    object Home: RootScreen("home")
 }

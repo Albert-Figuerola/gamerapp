@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.presentation.components.ProgressBar
-import com.albanda.gamerapp.presentation.navigation.AuthScreen
+import com.albanda.gamerapp.presentation.navigation.Graph
 import com.albanda.gamerapp.presentation.screens.signup.SignupViewModel
 
 @Composable
@@ -26,8 +26,8 @@ fun SignUp(
         is Response.Success<*> -> {
             LaunchedEffect(Unit) {
                 signupViewModel.createUser()
-                navHostController.popBackStack(AuthScreen.Login.route, inclusive = true)
-                navHostController.navigate(route = AuthScreen.Profile.route)
+                navHostController.popBackStack(Graph.AUTHENTICATION, inclusive = true)
+                navHostController.navigate(route = Graph.HOME)
             }
         }
 
