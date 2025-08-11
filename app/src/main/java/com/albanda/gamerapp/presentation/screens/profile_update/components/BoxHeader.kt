@@ -31,7 +31,7 @@ import com.albanda.gamerapp.presentation.ui.theme.Red500
 fun BoxHeader(profileUpdateViewModel: ProfileUpdateViewModel = hiltViewModel()) {
 
     profileUpdateViewModel.resultingActivityHandler.handle()
-    var dialogState = remember { mutableStateOf(false) }
+    val dialogState = remember { mutableStateOf(false) }
 
     DialogCapturePicture(
         status = dialogState,

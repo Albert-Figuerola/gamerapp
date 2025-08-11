@@ -3,6 +3,7 @@ package com.albanda.gamerapp.presentation.screens.new_post.components
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,27 +24,37 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil3.compose.AsyncImage
 import com.albanda.gamerapp.R
 import com.albanda.gamerapp.presentation.components.DefaultTextFiled
+import com.albanda.gamerapp.presentation.components.DialogCapturePicture
+import com.albanda.gamerapp.presentation.screens.new_post.NewPostViewModel
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NewPostContent() {
-    val radioOptions = listOf(
-        CategoryRadioButton("PC", R.drawable.icon_pc),
-        CategoryRadioButton("PS4", R.drawable.icon_ps4),
-        CategoryRadioButton("XBOX", R.drawable.icon_xbox),
-        CategoryRadioButton("NINTENDO", R.drawable.icon_nintendo),
-        CategoryRadioButton("MOBILE", R.drawable.icon_mobile)
+fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
+
+    val state = newPostViewModel.state
+    newPostViewModel.resultingActivityHandler.handle()
+    val dialogState = remember { mutableStateOf(false) }
+
+    DialogCapturePicture(
+        status = dialogState,
+        takePhoto = { newPostViewModel.takePhoto() },
+        pickImage = { newPostViewModel.pickImage() }
     )
 
     Column(
@@ -67,18 +78,47 @@ fun NewPostContent() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(Modifier.height(32.dp))
-                    Image(
-                        modifier = Modifier
-                            .height(120.dp)
-                            .padding(top = 20.dp),
-                        painter = painterResource(id = R.drawable.add_image),
-                        contentDescription = "Add image"
-                    )
-                    Text(
-                        text = "SELECCIONA UNA IMAGEN",
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+//                    Image(
+//                        modifier = Modifier
+//                            .height(120.dp)
+//                            .padding(top = 20.dp),
+//                        painter = painterResource(id = R.drawable.add_image),
+//                        contentDescription = "Add image"
+//                    )
+                    val image = newPostViewModel.state.image
+
+                    if (image != "") {
+                        AsyncImage(
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .fillMaxWidth()
+                                .height(200.dp)
+                                .clickable {
+                                    dialogState.value = true
+                                },
+                            contentScale = ContentScale.Crop,
+                            model = image,
+                            contentDescription = "Selected image"
+                        )
+                    } else {
+                        Image(
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .height(120.dp)
+                                .clickable {
+                                    dialogState.value = true
+                                },
+                            painter = painterResource(id = R.drawable.add_image),
+                            contentDescription = "User image"
+                        )
+                        Text(
+                            text = "SELECCIONA UNA IMAGEN",
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+
                 }
             }
         }
@@ -86,8 +126,8 @@ fun NewPostContent() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 25.dp, start = 20.dp, end = 20.dp),
-            value = "",
-            onValueChange = { },
+            value = state.name,
+            onValueChange = { newPostViewModel.onNameInput(it) },
             label = "Nombre del juego",
             leadingIcon = Icons.Default.Face,
             errorMsg = "",
@@ -99,8 +139,8 @@ fun NewPostContent() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, start = 20.dp, end = 20.dp),
-            value = "",
-            onValueChange = { },
+            value = state.description,
+            onValueChange = { newPostViewModel.onDescriptionInput(it) },
             label = "Descripción",
             leadingIcon = Icons.AutoMirrored.Default.List,
             errorMsg = "",
@@ -114,26 +154,28 @@ fun NewPostContent() {
             fontSize = 17.sp,
             fontWeight = FontWeight.Bold
         )
-        radioOptions.forEach { option ->
+        newPostViewModel.radioOptions.forEach { option ->
             Row(
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp)
                     .selectable(
-                        selected = false,
-                        onClick = { }
+                        selected = (option.category == state.category),
+                        onClick = { newPostViewModel.onCategoryInput(option.category) }
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = false,
-                    onClick = { }
+                    selected = (option.category == state.category),
+                    onClick = { newPostViewModel.onCategoryInput(option.category) }
                 )
                 Text(
                     modifier = Modifier.width(120.dp),
                     text = option.category
                 )
                 Image(
-                    modifier = Modifier.height(50.dp).padding(8.dp),
+                    modifier = Modifier
+                        .height(50.dp)
+                        .padding(8.dp),
                     painter = painterResource(id = option.image),
                     contentDescription = ""
                 )
@@ -154,8 +196,3 @@ fun PreviewNewPostContent() {
         }
     }
 }
-
-data class CategoryRadioButton(
-    var category: String,
-    var image: Int
-)
