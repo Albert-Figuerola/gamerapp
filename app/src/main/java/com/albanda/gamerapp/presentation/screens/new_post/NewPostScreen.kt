@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.albanda.gamerapp.presentation.components.DefaultButton
 import com.albanda.gamerapp.presentation.components.DefaultTopBar
@@ -12,7 +13,7 @@ import com.albanda.gamerapp.presentation.screens.new_post.components.NewPostCont
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NewPostScreen(navHostController: NavHostController) {
+fun NewPostScreen(navHostController: NavHostController, newPostViewModel: NewPostViewModel = hiltViewModel()) {
     Scaffold(
         topBar = {
             DefaultTopBar(
@@ -28,7 +29,7 @@ fun NewPostScreen(navHostController: NavHostController) {
             DefaultButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Publicar",
-                onClick = { }
+                onClick = { newPostViewModel.onNewPost() }
             )
         }
     )
