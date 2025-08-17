@@ -83,6 +83,7 @@ class CreatePostViewModel @Inject constructor(
             category = "",
             image = ""
         )
+        createPostResponse = null
     }
 
     fun onNameInput(name: String) {

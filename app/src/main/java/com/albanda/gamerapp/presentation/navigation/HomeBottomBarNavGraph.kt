@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.albanda.gamerapp.presentation.screens.my_posts.MyPostsScreen
-import com.albanda.gamerapp.presentation.screens.posts.PostScreen
+import com.albanda.gamerapp.presentation.screens.posts.PostsScreen
 import com.albanda.gamerapp.presentation.screens.profile.ProfileScreen
 
 @Composable
@@ -20,7 +20,7 @@ fun HomeBottomBarNavGraph(navHostController: NavHostController) {
         startDestination = HomeBottomBarScreen.Posts.route
     ) {
         composable(route = HomeBottomBarScreen.Posts.route) {
-            PostScreen(navHostController)
+            PostsScreen(navHostController)
         }
 
         composable(route = HomeBottomBarScreen.MyPosts.route) {
