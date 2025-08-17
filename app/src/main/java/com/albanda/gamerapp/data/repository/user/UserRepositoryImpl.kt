@@ -1,6 +1,7 @@
-package com.albanda.gamerapp.data.repository
+package com.albanda.gamerapp.data.repository.user
 
 import android.net.Uri
+import com.albanda.gamerapp.core.Constants.USERS
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.domain.model.User
 import com.albanda.gamerapp.domain.repository.UserRepository
@@ -12,10 +13,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserRepositoryImpl @Inject constructor(
-    private val usersRef: CollectionReference,
-    private val storageUsersRef: StorageReference
+    @Named(USERS) private val usersRef: CollectionReference,
+    @Named(USERS) private val storageUsersRef: StorageReference
 ): UserRepository {
 
     override suspend fun createUser(user: User): Response<Boolean> {
@@ -48,7 +50,7 @@ class UserRepositoryImpl @Inject constructor(
         return try {
             val fromFile = Uri.fromFile(file)
             val ref = storageUsersRef.child(file.name)
-            val uploadTask = ref.putFile(fromFile).await()
+            ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Success(url.toString())
         } catch (e: Exception) {

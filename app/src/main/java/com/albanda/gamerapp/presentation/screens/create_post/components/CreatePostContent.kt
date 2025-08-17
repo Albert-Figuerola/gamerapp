@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.presentation.screens.new_post.components
+package com.albanda.gamerapp.presentation.screens.create_post.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -39,22 +39,22 @@ import coil3.compose.AsyncImage
 import com.albanda.gamerapp.R
 import com.albanda.gamerapp.presentation.components.DefaultTextFiled
 import com.albanda.gamerapp.presentation.components.DialogCapturePicture
-import com.albanda.gamerapp.presentation.screens.new_post.NewPostViewModel
+import com.albanda.gamerapp.presentation.screens.create_post.CreatePostViewModel
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
+fun CreatePostContent(createPostViewModel: CreatePostViewModel = hiltViewModel()) {
 
-    val state = newPostViewModel.state
-    newPostViewModel.resultingActivityHandler.handle()
+    val state = createPostViewModel.state
+    createPostViewModel.resultingActivityHandler.handle()
     val dialogState = remember { mutableStateOf(false) }
 
     DialogCapturePicture(
         status = dialogState,
-        takePhoto = { newPostViewModel.takePhoto() },
-        pickImage = { newPostViewModel.pickImage() }
+        takePhoto = { createPostViewModel.takePhoto() },
+        pickImage = { createPostViewModel.pickImage() }
     )
 
     Column(
@@ -78,14 +78,8 @@ fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(Modifier.height(32.dp))
-//                    Image(
-//                        modifier = Modifier
-//                            .height(120.dp)
-//                            .padding(top = 20.dp),
-//                        painter = painterResource(id = R.drawable.add_image),
-//                        contentDescription = "Add image"
-//                    )
-                    val image = newPostViewModel.state.image
+
+                    val image = createPostViewModel.state.image
 
                     if (image != "") {
                         AsyncImage(
@@ -127,7 +121,7 @@ fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
                 .fillMaxWidth()
                 .padding(top = 25.dp, start = 20.dp, end = 20.dp),
             value = state.name,
-            onValueChange = { newPostViewModel.onNameInput(it) },
+            onValueChange = { createPostViewModel.onNameInput(it) },
             label = "Nombre del juego",
             leadingIcon = Icons.Default.Face,
             errorMsg = "",
@@ -140,7 +134,7 @@ fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
                 .fillMaxWidth()
                 .padding(top = 10.dp, start = 20.dp, end = 20.dp),
             value = state.description,
-            onValueChange = { newPostViewModel.onDescriptionInput(it) },
+            onValueChange = { createPostViewModel.onDescriptionInput(it) },
             label = "Descripción",
             leadingIcon = Icons.AutoMirrored.Default.List,
             errorMsg = "",
@@ -154,19 +148,19 @@ fun NewPostContent(newPostViewModel: NewPostViewModel = hiltViewModel()) {
             fontSize = 17.sp,
             fontWeight = FontWeight.Bold
         )
-        newPostViewModel.radioOptions.forEach { option ->
+        createPostViewModel.radioOptions.forEach { option ->
             Row(
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp)
                     .selectable(
                         selected = (option.category == state.category),
-                        onClick = { newPostViewModel.onCategoryInput(option.category) }
+                        onClick = { createPostViewModel.onCategoryInput(option.category) }
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
                     selected = (option.category == state.category),
-                    onClick = { newPostViewModel.onCategoryInput(option.category) }
+                    onClick = { createPostViewModel.onCategoryInput(option.category) }
                 )
                 Text(
                     modifier = Modifier.width(120.dp),
@@ -192,7 +186,7 @@ fun PreviewNewPostContent() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            NewPostContent()
+            CreatePostContent()
         }
     }
 }

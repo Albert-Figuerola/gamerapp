@@ -1,4 +1,4 @@
-package com.albanda.gamerapp.data.repository
+package com.albanda.gamerapp.data.repository.auth
 
 import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.domain.model.User

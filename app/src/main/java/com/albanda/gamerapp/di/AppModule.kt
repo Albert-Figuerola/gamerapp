@@ -1,15 +1,20 @@
 package com.albanda.gamerapp.di
 
+import com.albanda.gamerapp.core.Constants.POSTS
 import com.albanda.gamerapp.core.Constants.USERS
-import com.albanda.gamerapp.data.repository.AuthRepositoryImpl
-import com.albanda.gamerapp.data.repository.UserRepositoryImpl
+import com.albanda.gamerapp.data.repository.auth.AuthRepositoryImpl
+import com.albanda.gamerapp.data.repository.post.PostRepositoryImpl
+import com.albanda.gamerapp.data.repository.user.UserRepositoryImpl
 import com.albanda.gamerapp.domain.repository.AuthRepository
+import com.albanda.gamerapp.domain.repository.PostRepository
 import com.albanda.gamerapp.domain.repository.UserRepository
 import com.albanda.gamerapp.domain.usecase.auth.AuthUseCases
 import com.albanda.gamerapp.domain.usecase.auth.GetCurrentUser
 import com.albanda.gamerapp.domain.usecase.auth.Login
 import com.albanda.gamerapp.domain.usecase.auth.Logout
 import com.albanda.gamerapp.domain.usecase.auth.Signup
+import com.albanda.gamerapp.domain.usecase.post.CreatePost
+import com.albanda.gamerapp.domain.usecase.post.PostUseCases
 import com.albanda.gamerapp.domain.usecase.user.CreateUser
 import com.albanda.gamerapp.domain.usecase.user.GetUserById
 import com.albanda.gamerapp.domain.usecase.user.SaveImage
@@ -26,6 +31,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -37,9 +43,11 @@ object AppModule {
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 
     @Provides
+    @Named(USERS)
     fun provideStorageUsersRef(storage: FirebaseStorage): StorageReference = storage.reference.child(USERS)
 
     @Provides
+    @Named(USERS)
     fun provideUsersRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)
 
     @Provides
@@ -66,4 +74,21 @@ object AppModule {
         updateUser = UpdateUser(userRepository),
         saveImage = SaveImage(userRepository)
     )
+
+    @Provides
+    fun providePostRepository(postRepositoryImpl: PostRepositoryImpl): PostRepository = postRepositoryImpl
+
+    @Provides
+    fun providePostUseCases(postRepository: PostRepository) = PostUseCases (
+        createPost = CreatePost(postRepository)
+    )
+
+    @Provides
+    @Named(POSTS)
+    fun provideStoragePostsRef(storage: FirebaseStorage): StorageReference = storage.reference.child(POSTS)
+
+    @Provides
+    @Named(POSTS)
+    fun providePostsRef(db: FirebaseFirestore): CollectionReference = db.collection(POSTS)
+
 }

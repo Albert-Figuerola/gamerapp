@@ -1,13 +1,16 @@
-package com.albanda.gamerapp.presentation.screens.new_post
+package com.albanda.gamerapp.presentation.screens.create_post
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albanda.gamerapp.R
+import com.albanda.gamerapp.domain.model.Post
+import com.albanda.gamerapp.domain.model.Response
+import com.albanda.gamerapp.domain.usecase.auth.AuthUseCases
+import com.albanda.gamerapp.domain.usecase.post.PostUseCases
 import com.albanda.gamerapp.presentation.utils.ComposeFileProvider
 import com.albanda.gamerapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +20,21 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class NewPostViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+class CreatePostViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val postUseCases: PostUseCases,
+    private val authUseCases: AuthUseCases
 ): ViewModel() {
 
-    var state by mutableStateOf(NewPostState())
+    var state by mutableStateOf(CreatePostState())
 
     var file: File? = null
     val resultingActivityHandler = ResultingActivityHandler()
+
+    var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
+            private set
+
+    val currentUser = authUseCases.getCurrentUser()
 
     val radioOptions = listOf(
         CategoryRadioButton("PC", R.drawable.icon_pc),
@@ -34,11 +44,20 @@ class NewPostViewModel @Inject constructor(
         CategoryRadioButton("MOBILE", R.drawable.icon_mobile)
     )
 
-    fun onNewPost() {
-        Log.d("NewPostViewModel", "name: ${state.name}")
-        Log.d("NewPostViewModel", "description: ${state.description}")
-        Log.d("NewPostViewModel", "category: ${state.category}")
-        Log.d("NewPostViewModel", "image: ${state.image}")
+    fun createPost(post: Post) = viewModelScope.launch {
+        createPostResponse = Response.Loading
+        val result = postUseCases.createPost(post, file!!)
+        createPostResponse = result
+    }
+
+    fun onCreatePost() {
+        val post = Post(
+            name = state.name,
+            description = state.description,
+            category = state.category,
+            userId = currentUser?.uid ?: "",
+        )
+        createPost(post)
     }
 
     fun pickImage() = viewModelScope.launch {
@@ -57,8 +76,13 @@ class NewPostViewModel @Inject constructor(
         }
     }
 
-    fun onImageInput(image: String) {
-        state = state.copy(image = image)
+    fun clearForm() {
+        state = state.copy(
+            name = "",
+            description = "",
+            category = "",
+            image = ""
+        )
     }
 
     fun onNameInput(name: String) {
