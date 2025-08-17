@@ -14,6 +14,7 @@ import com.albanda.gamerapp.domain.usecase.auth.Login
 import com.albanda.gamerapp.domain.usecase.auth.Logout
 import com.albanda.gamerapp.domain.usecase.auth.Signup
 import com.albanda.gamerapp.domain.usecase.post.CreatePost
+import com.albanda.gamerapp.domain.usecase.post.GetPosts
 import com.albanda.gamerapp.domain.usecase.post.PostUseCases
 import com.albanda.gamerapp.domain.usecase.user.CreateUser
 import com.albanda.gamerapp.domain.usecase.user.GetUserById
@@ -80,7 +81,8 @@ object AppModule {
 
     @Provides
     fun providePostUseCases(postRepository: PostRepository) = PostUseCases (
-        createPost = CreatePost(postRepository)
+        createPost = CreatePost(postRepository),
+        getPosts = GetPosts(postRepository)
     )
 
     @Provides
