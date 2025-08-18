@@ -20,7 +20,7 @@ fun HomeBottomBarNavGraph(navHostController: NavHostController) {
         startDestination = HomeBottomBarScreen.Posts.route
     ) {
         composable(route = HomeBottomBarScreen.Posts.route) {
-            PostsScreen(navHostController)
+            PostsScreen()
         }
 
         composable(route = HomeBottomBarScreen.MyPosts.route) {
