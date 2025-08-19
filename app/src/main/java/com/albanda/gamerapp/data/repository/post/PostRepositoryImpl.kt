@@ -2,14 +2,21 @@ package com.albanda.gamerapp.data.repository.post
 
 import android.net.Uri
 import com.albanda.gamerapp.core.Constants.POSTS
+import com.albanda.gamerapp.core.Constants.USERS
 import com.albanda.gamerapp.domain.model.Post
 import com.albanda.gamerapp.domain.model.Response
+import com.albanda.gamerapp.domain.model.User
 import com.albanda.gamerapp.domain.repository.PostRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
@@ -17,7 +24,8 @@ import javax.inject.Named
 
 class PostRepositoryImpl @Inject constructor(
     @Named(POSTS) private val postsRef: CollectionReference,
-    @Named(POSTS) private val storagePostsRef: StorageReference
+    @Named(USERS) private val usersRef: CollectionReference,
+    @Named(POSTS) private val storagePostsRef: StorageReference,
 ) : PostRepository {
 
     override suspend fun createPost(
@@ -40,15 +48,26 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow {
         val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
-            val postsResponse = if (snapshot != null) {
-                val posts = snapshot.toObjects(Post::class.java)
-                Response.Success(posts)
-            } else {
-                Response.Failure(e)
+            GlobalScope.launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+                    posts.map { post ->
+                        async {
+                            post.user = usersRef.document(post.userId).get().await().toObject(User::class.java)!!
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+                    Response.Success(posts)
+                } else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
             }
-            trySend(postsResponse)
+
         }
         awaitClose {
             snapshotListener.remove()
