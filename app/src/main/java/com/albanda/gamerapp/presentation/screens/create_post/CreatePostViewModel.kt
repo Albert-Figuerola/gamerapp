@@ -37,11 +37,11 @@ class CreatePostViewModel @Inject constructor(
     val currentUser = authUseCases.getCurrentUser()
 
     val radioOptions = listOf(
-        CategoryRadioButton("PC", R.drawable.icon_pc),
-        CategoryRadioButton("PS4", R.drawable.icon_ps4),
-        CategoryRadioButton("XBOX", R.drawable.icon_xbox),
-        CategoryRadioButton("NINTENDO", R.drawable.icon_nintendo),
-        CategoryRadioButton("MOBILE", R.drawable.icon_mobile)
+        CategoryRadioButton("Pc", R.drawable.icon_pc),
+        CategoryRadioButton("Ps4", R.drawable.icon_ps4),
+        CategoryRadioButton("Xbox", R.drawable.icon_xbox),
+        CategoryRadioButton("Nintendo", R.drawable.icon_nintendo),
+        CategoryRadioButton("Mobile", R.drawable.icon_mobile)
     )
 
     fun createPost(post: Post) = viewModelScope.launch {
