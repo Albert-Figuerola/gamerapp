@@ -54,9 +54,17 @@ class PostRepositoryImpl @Inject constructor(
             GlobalScope.launch(Dispatchers.IO) {
                 val postsResponse = if (snapshot != null) {
                     val posts = snapshot.toObjects(Post::class.java)
-                    posts.map { post ->
+
+                    val userIds = posts.map { it.userId }.distinct()
+
+                    userIds.map { userId ->
                         async {
-                            post.user = usersRef.document(post.userId).get().await().toObject(User::class.java)!!
+                            val user = usersRef.document(userId).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.userId == userId) {
+                                    post.user = user
+                                }
+                            }
                         }
                     }.forEach {
                         it.await()
