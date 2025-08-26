@@ -7,10 +7,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.albanda.gamerapp.domain.model.Post
 
 @Composable
 fun PostsContent(
+    navHostController: NavHostController,
     posts: List<Post>
 ) {
     LazyColumn(
@@ -23,7 +25,7 @@ fun PostsContent(
         items(
             items = posts
         ) { post ->
-            PostsCard(post = post)
+            PostsCard(navHostController = navHostController, post = post)
         }
     }
 }
