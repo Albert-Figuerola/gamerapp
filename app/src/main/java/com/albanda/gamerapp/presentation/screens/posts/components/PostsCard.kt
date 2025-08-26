@@ -1,5 +1,6 @@
 package com.albanda.gamerapp.presentation.screens.posts.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,14 +17,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.albanda.gamerapp.domain.model.Post
+import com.albanda.gamerapp.presentation.navigation.DetailsScreen
 
 @Composable
-fun PostsCard(post: Post) {
+fun PostsCard(navHostController: NavHostController, post: Post) {
 
     Card(
-        modifier = Modifier.padding(top = 12.dp),
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .clickable {
+                navHostController.navigate(route = DetailsScreen.DetailPost.passPost(post.toJson()))
+            },
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(20.dp)
     ) {
