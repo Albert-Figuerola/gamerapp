@@ -11,7 +11,7 @@ import com.albanda.gamerapp.presentation.screens.detail_post.components.DetailPo
 fun DetailPostScreen(navHostController: NavHostController, post: String) {
     Scaffold (
         content = {
-            DetailPostContent()
+            DetailPostContent(navHostController)
         }
     )
 }
