@@ -2,6 +2,7 @@ package com.albanda.gamerapp.presentation.screens.detail_post.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,9 +16,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,27 +36,45 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import coil3.compose.AsyncImage
 import com.albanda.gamerapp.R
+import com.albanda.gamerapp.presentation.screens.detail_post.DetailPostViewModel
 import com.albanda.gamerapp.presentation.ui.theme.GamerAppTheme
 import com.albanda.gamerapp.presentation.ui.theme.Red500
 
 @Composable
-fun DetailPostContent() {
+fun DetailPostContent(
+    navHostController: NavHostController,
+    detailPostViewModel: DetailPostViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 25.dp)
+            .padding(top = 35.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-//            model = "",
-            painter = painterResource(id = R.drawable.control),
-            contentDescription = "",
-            contentScale = ContentScale.Crop
-        )
+        Box() {
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                model = detailPostViewModel.post.image,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
+            IconButton(onClick = { navHostController.popBackStack() }) {
+                Icon(
+                    modifier = Modifier
+                        .size(35.dp),
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }
+        }
 
         Card(
             modifier = Modifier
@@ -64,12 +87,11 @@ fun DetailPostContent() {
                 modifier = Modifier
                     .padding(vertical = 10.dp, horizontal = 15.dp)
             ) {
-                Image(
+                AsyncImage(
                     modifier = Modifier
                         .size(55.dp)
                         .clip(CircleShape),
-//                    model = "",
-                    painter = painterResource(id = R.drawable.control),
+                    model = detailPostViewModel.post.user?.image ?: "",
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
@@ -77,11 +99,11 @@ fun DetailPostContent() {
                     modifier = Modifier.padding(top = 3.dp, start = 10.dp)
                 ) {
                     Text(
-                        text = "Nombre del usuario",
+                        text = detailPostViewModel.post.user?.username ?: "",
                         fontSize = 13.sp
                     )
                     Text(
-                        text = "Email",
+                        text = detailPostViewModel.post.user?.email ?: "",
                         fontSize = 11.sp
                     )
                 }
@@ -91,7 +113,7 @@ fun DetailPostContent() {
         Text(
             modifier = Modifier
                 .padding(vertical = 5.dp, horizontal = 20.dp),
-            text = "Título del juego",
+            text = detailPostViewModel.post.name,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Red500
@@ -110,14 +132,36 @@ fun DetailPostContent() {
             ) {
                 Image(
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource(R.drawable.icon_xbox),
+                    painter = painterResource(
+                        when (detailPostViewModel.post.category) {
+                            "Pc" -> {
+                                R.drawable.icon_pc
+                            }
+
+                            "Ps4" -> {
+                                R.drawable.icon_ps4
+                            }
+
+                            "Xbox" -> {
+                                R.drawable.icon_xbox
+                            }
+
+                            "Nintendo" -> {
+                                R.drawable.icon_nintendo
+                            }
+
+                            else -> {
+                                R.drawable.icon_mobile
+                            }
+                        }
+                    ),
                     contentDescription = ""
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
 
                 Text(
-                    text = "Categoría",
+                    text = detailPostViewModel.post.category,
                     fontWeight = FontWeight.Bold,
                     fontSize = 17.sp
                 )
@@ -139,7 +183,7 @@ fun DetailPostContent() {
 
         Text(
             modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp),
-            text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            text = detailPostViewModel.post.description,
             fontSize = 14.sp
         )
 
@@ -154,7 +198,7 @@ fun PreviewDetailPostContentScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            DetailPostContent()
+            DetailPostContent(rememberNavController())
         }
     }
 }
