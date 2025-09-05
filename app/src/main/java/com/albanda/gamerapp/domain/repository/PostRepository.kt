@@ -11,4 +11,6 @@ interface PostRepository {
 
     fun getPosts(): Flow<Response<List<Post>>>
 
+    fun getPostsByUserId(userId: String): Flow<Response<List<Post>>>
+
 }
