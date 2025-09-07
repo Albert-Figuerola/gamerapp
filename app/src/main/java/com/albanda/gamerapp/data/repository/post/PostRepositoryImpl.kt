@@ -54,6 +54,9 @@ class PostRepositoryImpl @Inject constructor(
             GlobalScope.launch(Dispatchers.IO) {
                 val postsResponse = if (snapshot != null) {
                     val posts = snapshot.toObjects(Post::class.java)
+                    snapshot.documents.forEachIndexed { index, document ->
+                        posts[index].id = document.id
+                    }
 
                     val userIds = posts.map { it.userId }.distinct()
 
@@ -87,6 +90,9 @@ class PostRepositoryImpl @Inject constructor(
         val snapshotListener = postsRef.whereEqualTo("userId", userId).addSnapshotListener { snapshot, e ->
             val postsResponse = if (snapshot != null) {
                 val posts = snapshot.toObjects(Post::class.java)
+                snapshot.documents.forEachIndexed { index, document ->
+                    posts[index].id = document.id
+                }
 
                 Response.Success(posts)
             } else {
@@ -98,4 +104,15 @@ class PostRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    override suspend fun deletePost(postId: String): Response<Boolean> {
+        return try {
+            postsRef.document(postId).delete().await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
 }

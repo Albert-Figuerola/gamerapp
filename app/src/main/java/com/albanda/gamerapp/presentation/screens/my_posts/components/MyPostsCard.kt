@@ -1,13 +1,20 @@
 package com.albanda.gamerapp.presentation.screens.my_posts.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,13 +24,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.albanda.gamerapp.domain.model.Post
 import com.albanda.gamerapp.presentation.navigation.DetailsScreen
+import com.albanda.gamerapp.presentation.screens.my_posts.MyPostsViewModel
 
 @Composable
-fun MyPostsCard(navHostController: NavHostController, post: Post) {
+fun MyPostsCard(
+    navHostController: NavHostController,
+    myPostsViewModel: MyPostsViewModel = hiltViewModel(),
+    post: Post
+) {
 
     Card(
         modifier = Modifier
@@ -56,6 +69,23 @@ fun MyPostsCard(navHostController: NavHostController, post: Post) {
                 overflow = TextOverflow.Ellipsis,
                 color = Color.Gray
             )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(
+                    onClick = { myPostsViewModel.deletePost(post.id) }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(20.dp),
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete button",
+                        tint = Color.White
+                    )
+                }
+            }
+
         }
     }
 }
