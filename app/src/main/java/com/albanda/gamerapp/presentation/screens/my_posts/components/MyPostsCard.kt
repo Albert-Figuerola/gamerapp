@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -71,7 +72,7 @@ fun MyPostsCard(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(
                     onClick = { myPostsViewModel.deletePost(post.id) }
@@ -81,6 +82,21 @@ fun MyPostsCard(
                             .size(20.dp),
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete button",
+                        tint = Color.White
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        navHostController.navigate(
+                            route = DetailsScreen.UpdatePost.passPost(post.toJson())
+                        )
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(20.dp),
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit button",
                         tint = Color.White
                     )
                 }

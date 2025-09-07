@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.albanda.gamerapp.presentation.screens.create_post.CreatePostScreen
 import com.albanda.gamerapp.presentation.screens.detail_post.DetailPostScreen
 import com.albanda.gamerapp.presentation.screens.profile_update.ProfileEditScreen
+import com.albanda.gamerapp.presentation.screens.update_post.UpdatePostScreen
 
 fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController) {
     navigation(
@@ -41,6 +42,17 @@ fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController) {
             }
         }
 
+        composable(
+            route = DetailsScreen.UpdatePost.route,
+            arguments = listOf(navArgument("post") {
+                type = NavType.StringType
+            })
+        ) {
+            it.arguments?.getString("post")?.let { post ->
+                UpdatePostScreen(navHostController)
+            }
+        }
+
     }
 }
 
@@ -51,5 +63,8 @@ sealed class DetailsScreen(val route: String) {
     }
     object DetailPost: DetailsScreen("posts/detail/{post}") {
         fun passPost(post: String) = "posts/detail/$post"
+    }
+    object UpdatePost: DetailsScreen("posts/update/{post}") {
+        fun passPost(post: String) = "posts/update/$post"
     }
 }
