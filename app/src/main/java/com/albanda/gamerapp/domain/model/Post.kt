@@ -24,7 +24,7 @@ data class Post(
             User(
                 id = user?.id ?: "",
                 username = user?.username ?: "",
-                image = if (user?.image != "") URLEncoder.encode(user?.image, StandardCharsets.UTF_8.toString()) else "",
+                image = if (!user?.image.isNullOrBlank()) URLEncoder.encode(user?.image, StandardCharsets.UTF_8.toString()) else "",
                 email = user?.email ?: ""
             )
         )
