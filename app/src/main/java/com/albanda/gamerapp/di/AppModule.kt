@@ -18,6 +18,7 @@ import com.albanda.gamerapp.domain.usecase.post.DeletePost
 import com.albanda.gamerapp.domain.usecase.post.GetPosts
 import com.albanda.gamerapp.domain.usecase.post.GetPostsByUserId
 import com.albanda.gamerapp.domain.usecase.post.PostUseCases
+import com.albanda.gamerapp.domain.usecase.post.UpdatePost
 import com.albanda.gamerapp.domain.usecase.user.CreateUser
 import com.albanda.gamerapp.domain.usecase.user.GetUserById
 import com.albanda.gamerapp.domain.usecase.user.SaveImage
@@ -86,7 +87,8 @@ object AppModule {
         createPost = CreatePost(postRepository),
         getPosts = GetPosts(postRepository),
         getPostsByUserId = GetPostsByUserId(postRepository),
-        deletePost = DeletePost(postRepository)
+        deletePost = DeletePost(postRepository),
+        updatePost = UpdatePost(postRepository)
     )
 
     @Provides
