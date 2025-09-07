@@ -13,4 +13,6 @@ interface PostRepository {
 
     fun getPostsByUserId(userId: String): Flow<Response<List<Post>>>
 
+    suspend fun deletePost(postId: String): Response<Boolean>
+
 }
