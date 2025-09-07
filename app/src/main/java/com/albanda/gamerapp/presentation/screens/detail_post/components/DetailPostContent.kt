@@ -76,38 +76,42 @@ fun DetailPostContent(
             }
         }
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 15.dp, horizontal = 20.dp),
-            elevation = CardDefaults.cardElevation(4.dp),
-            shape = RoundedCornerShape(10.dp)
-        ) {
-            Row(
+        if (!detailPostViewModel.post.user?.username.isNullOrBlank()) {
+            Card(
                 modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 15.dp)
+                    .fillMaxWidth()
+                    .padding(vertical = 15.dp, horizontal = 20.dp),
+                elevation = CardDefaults.cardElevation(4.dp),
+                shape = RoundedCornerShape(10.dp)
             ) {
-                AsyncImage(
+                Row(
                     modifier = Modifier
-                        .size(55.dp)
-                        .clip(CircleShape),
-                    model = detailPostViewModel.post.user?.image ?: "",
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                )
-                Column(
-                    modifier = Modifier.padding(top = 3.dp, start = 10.dp)
+                        .padding(vertical = 10.dp, horizontal = 15.dp)
                 ) {
-                    Text(
-                        text = detailPostViewModel.post.user?.username ?: "",
-                        fontSize = 13.sp
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(55.dp)
+                            .clip(CircleShape),
+                        model = detailPostViewModel.post.user?.image ?: "",
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
                     )
-                    Text(
-                        text = detailPostViewModel.post.user?.email ?: "",
-                        fontSize = 11.sp
-                    )
+                    Column(
+                        modifier = Modifier.padding(top = 3.dp, start = 10.dp)
+                    ) {
+                        Text(
+                            text = detailPostViewModel.post.user?.username ?: "",
+                            fontSize = 13.sp
+                        )
+                        Text(
+                            text = detailPostViewModel.post.user?.email ?: "",
+                            fontSize = 11.sp
+                        )
+                    }
                 }
             }
+        } else {
+            Spacer(modifier = Modifier.height(15.dp))
         }
 
         Text(
