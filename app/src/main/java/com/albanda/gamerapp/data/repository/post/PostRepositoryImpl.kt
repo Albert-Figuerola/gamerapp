@@ -8,6 +8,7 @@ import com.albanda.gamerapp.domain.model.Response
 import com.albanda.gamerapp.domain.model.User
 import com.albanda.gamerapp.domain.repository.PostRepository
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -142,4 +143,31 @@ class PostRepositoryImpl @Inject constructor(
             Response.Failure(e)
         }
     }
+
+    override suspend fun createLike(
+        postId: String,
+        userId: String
+    ): Response<Boolean> {
+        return try {
+            postsRef.document(postId).update("likes", FieldValue.arrayUnion(userId)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun deleteLike(
+        postId: String,
+        userId: String
+    ): Response<Boolean> {
+        return try {
+            postsRef.document(postId).update("likes", FieldValue.arrayRemove(userId)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
 }
